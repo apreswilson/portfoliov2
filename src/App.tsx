@@ -1,32 +1,34 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
+import TileBackground from "./components/background";
+import IntroSection from "./components/intro/intro";
 
-function App() {
-  const [count, setCount] = useState(0);
+export default function App() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const client = navigator.userAgent;
+    const mobile = /Mobi|Android|iPhone|iPad|iPod/i.test(client);
+    setIsMobile(mobile);
+  }, []);
+
+  const options = ["About", "Projects", "Links"];
+  const [activeOption, setActiveOption] = useState<string>("About");
+
+  const [pageView, setPageView] = useState<string>("Home");
+  console.log(pageView);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-      <p className="text-red-500"></p>
+      <TileBackground />
+      <IntroSection
+        isMobile={isMobile}
+        options={options}
+        activeOption={activeOption}
+        setActiveOption={setActiveOption}
+        pageView={pageView}
+        setPageView={setPageView}
+      />
     </>
   );
 }
-
-export default App;
