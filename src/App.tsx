@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import TileBackground from "./components/background";
-import IntroSection from "./components/intro/intro";
+import IntroSection from "./components/sections/intro";
+import LinksSection from "./components/sections/links";
+import { useSound } from "./hooks/useSound";
+import AboutSection from "./components/sections/about";
+import ProjectSection from "./components/sections/projects";
 
 export default function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -12,23 +16,15 @@ export default function App() {
     setIsMobile(mobile);
   }, []);
 
-  const options = ["About", "Projects", "Links"];
-  const [activeOption, setActiveOption] = useState<string>("About");
-
   const [pageView, setPageView] = useState<string>("Home");
-  console.log(pageView);
 
   return (
     <>
       <TileBackground />
-      <IntroSection
-        isMobile={isMobile}
-        options={options}
-        activeOption={activeOption}
-        setActiveOption={setActiveOption}
-        pageView={pageView}
-        setPageView={setPageView}
-      />
+      <IntroSection isMobile={isMobile} pageView={pageView} setPageView={setPageView} />
+      <LinksSection pageView={pageView} setPageView={setPageView} isMobile={isMobile} />
+      <AboutSection pageView={pageView} setPageView={setPageView} isMobile={isMobile} />
+      <ProjectSection pageView={pageView} setPageView={setPageView} isMobile={isMobile} />
     </>
   );
 }

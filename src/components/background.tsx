@@ -5,7 +5,6 @@ type BackgroundProps = { tileSize?: number };
 export default function TileBackground({ tileSize = 50 }: Readonly<BackgroundProps>) {
   const [gridDims, setGridDims] = useState({ rows: 0, cols: 0 });
 
-  // calculate rows/cols on mount and on resize
   useEffect(() => {
     const calculateGrid = () => {
       setGridDims({

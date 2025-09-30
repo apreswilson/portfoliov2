@@ -1,76 +1,45 @@
-import { useEffect, useRef } from "react";
-import "./intro.css";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { useSound } from "../../hooks/useSound";
+import type { SectionProps } from "../../types/props";
 
-type IntroProps = {
-  isMobile: boolean;
-  activeOption: string;
-  setActiveOption: React.Dispatch<React.SetStateAction<string>>;
-  options: string[];
-  pageView: string;
-  setPageView: React.Dispatch<React.SetStateAction<string>>;
-};
-export default function IntroSection({
-  isMobile,
-  activeOption,
-  setActiveOption,
-  options,
-  setPageView,
-}: Readonly<IntroProps>) {
-  const hoverSound = useRef<HTMLAudioElement | null>(null);
-  const clickSound = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    hoverSound.current = new Audio("/hover_sound.mp3");
-    clickSound.current = new Audio("/click_sound.mp3");
-  }, []);
-
-  const playHoverSound = () => {
-    if (hoverSound.current) {
-      hoverSound.current.currentTime = 0;
-      hoverSound.current.play();
-    }
-  };
-
-  const playClickSound = () => {
-    if (clickSound.current) {
-      clickSound.current.currentTime = 0;
-      clickSound.current.play();
-    }
-  };
+export default function IntroSection({ isMobile, pageView, setPageView }: Readonly<SectionProps>) {
+  const options = ["About", "Projects", "Links"];
+  const [activeOption, setActiveOption] = useState<string>(isMobile ? " " : "About");
+  const { playHover, playClick } = useSound("/hover_sound.mp3", "/click_sound.mp3");
 
   const handleMouseOver = (option: string) => {
     if (!isMobile) {
       setActiveOption(option);
-      playHoverSound();
+      playHover();
     }
   };
 
   const updateActiveOption = (position: number, movement: "up" | "down") => {
-    if (!isMobile) {
+    if (!isMobile || pageView === "Home") {
       if (movement === "up" && position > 0) {
         setActiveOption(options[position - 1]);
-        playHoverSound();
+        playHover();
       } else if (movement === "down" && position < options.length - 1) {
         setActiveOption(options[position + 1]);
-        playHoverSound();
+        playHover();
       }
     }
   };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isMobile) return;
+      if (isMobile || pageView !== "Home") return;
 
       const currentIndex = options.indexOf(activeOption);
 
-      if (/^(ArrowDown|s|j)$/i.test(e.key)) {
+      if (/^(ArrowDown|j)$/i.test(e.key)) {
         updateActiveOption(currentIndex, "down");
-      } else if (/^(ArrowUp|w|k)$/i.test(e.key)) {
+      } else if (/^(ArrowUp|k)$/i.test(e.key)) {
         updateActiveOption(currentIndex, "up");
       } else if (/^Enter$/i.test(e.key)) {
         setPageView(activeOption);
-        playClickSound();
+        playClick();
       }
     };
 
@@ -79,15 +48,17 @@ export default function IntroSection({
   }, [activeOption, options, isMobile]);
 
   return (
-    <div className="flex flex-col gap-4 h-screen w-11/12 md:w-1/2 lg:w-1/3 mx-auto justify-center">
+    <div
+      className={clsx(
+        "flex flex-col gap-4 h-screen w-11/12 md:w-1/2 lg:w-1/3 justify-center transition-all duration-100 absolute top-0 left-1/2 -translate-x-1/2",
+        pageView !== "Home" ? "invisible opacity-0" : "opacity-100"
+      )}
+    >
       <h1 className="z-50 text-red-500 text-center text-6xl mb-7">Alex Wilson</h1>
 
       {!isMobile && (
         <p className="z-50 mb-7 leading-12 text-center">
-          <span className="sr-only">Use up and down arrows, j and k, or mouse to navigate the menu options.</span>
-          Use <span className="bg-gray-200 p-2">↑</span> and <span className="bg-gray-200 p-2">↓</span>,
-          <span className="bg-gray-200 p-2">j</span> and <span className="bg-gray-200 p-2">k</span> (if you know, you
-          know), or <span className="bg-gray-200 p-2">🖱</span> to navigate.
+          This website is arrow keys or vim navigation (h, j, k, l) friendly. Hit ENTER to confirm.
         </p>
       )}
 
@@ -105,7 +76,7 @@ export default function IntroSection({
           onClick={() => {
             setActiveOption(option);
             setPageView(option);
-            playClickSound();
+            playClick();
           }}
         >
           {option}
