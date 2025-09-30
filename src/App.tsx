@@ -3,7 +3,6 @@ import "./App.css";
 import TileBackground from "./components/background";
 import IntroSection from "./components/sections/intro";
 import LinksSection from "./components/sections/links";
-import { useSound } from "./hooks/useSound";
 import AboutSection from "./components/sections/about";
 import ProjectSection from "./components/sections/projects";
 

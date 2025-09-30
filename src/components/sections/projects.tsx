@@ -181,7 +181,7 @@ export default function ProjectSection({ pageView, setPageView, isMobile }: Read
         </div>
 
         <ul className="flex gap-6 flex-col md:flex-row sm:h-[50rem] md:h-auto overflow-y-auto">
-          {options.map((option, index) => (
+          {options.map((option) => (
             <li key={option.label}>
               <button
                 className={clsx(
