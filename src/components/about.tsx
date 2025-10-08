@@ -4,7 +4,7 @@ export default function About() {
   return (
     <div className="flex min-h-screen justify-center items-center px-4 py-8">
       <Background />
-      <div className="z-1 w-11/12 lg:w-1/3">
+      <div className="z-1 w-full lg:w-1/3">
         <div className="flex items-center gap-2 mb-6">
           <a href="/" className="px-2 py-2 rounded-lg bg-black/40 border-white/20 border text-gray-200 hover:border-white/50 transition-all text-2xl hoveranim">← Back</a>
           <h1 className="text-5xl text-white drop-shadow-black drop-shadow-xl">About</h1>

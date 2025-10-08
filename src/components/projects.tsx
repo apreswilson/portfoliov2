@@ -17,7 +17,7 @@ export default function Projects() {
     <div className="flex min-h-screen justify-center items-center px-4 py-8">
       <Background />
 
-      <div className="z-1 w-11/12 lg:w-3/4">
+      <div className="z-1 w-full lg:w-3/4">
 
         <div className="flex items-center gap-2 mb-6">
           <a href="/" className="px-2 py-2 rounded-lg bg-black/40 border-white/20 border text-gray-200 hover:border-white/50 transition-all text-2xl hoveranim">← Back</a>
@@ -28,7 +28,7 @@ export default function Projects() {
           {projects.map((project) => (
             <div className="flex-1 max-w-full md:max-w-1/3 flex flex-col gap-4 p-4 rounded-lg bg-black/40 border-white/20 border text-gray-200 hover:border-white/50 transition-all text-2xl">
               <h2 className="drop-shadow-black drop-shadow-xl text-4xl">{project.name}</h2>
-              <img src={project.img} className="w-full h-64 rounded-lg object-cover" />
+              <img src={project.img} className="w-full h-40 lg:h-64 rounded-lg" />
               <p className="drop-shadow-black drop-shadow-xl flex-1">{project.description}</p>
 
               <div className="flex gap-2 text-base">
