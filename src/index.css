@@ -2,15 +2,19 @@
 @import "tailwindcss";
 
 :root {
-    font-family: "Inter", monospace;
-    color-scheme: light dark;
-    /* color: rgba(255, 255, 255, 0.87); */
-    /* background-color: #242424; */
+  font-family: "Inter", monospace;
+  color-scheme: light dark;
+  /* color: rgba(255, 255, 255, 0.87); */
+  /* background-color: #242424; */
 }
 
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.skill {
+  @apply text-[#e47698] underline underline-offset-8;
 }
 
 /* .bg { */
